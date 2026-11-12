@@ -1,3 +1,6 @@
+using Acme.Center.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Acme.Center.Platform.Profiles.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Acme.Center.Platform.Publishing.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Acme.Center.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Acme.Center.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +35,16 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
+        // Publishing Context
+        builder.ApplyPublishingConfiguration();
+
+        // Profiles Context
+        builder.ApplyProfilesConfiguration();
+
+        // IAM Context
+        builder.ApplyIamConfiguration();
+
         // General Naming Convention for the database objects
         builder.UseSnakeCaseNamingConvention();
     }
